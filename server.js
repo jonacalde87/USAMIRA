@@ -12,7 +12,7 @@ app.use(express.json())
 
 //db
 mongoose.connect(process.env.MONGODB_URI || 
-    "mongodb://localhost:27017/rock-the-vote-db",
+    "mongodb://localhost:27017/USAMIRA-db",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
