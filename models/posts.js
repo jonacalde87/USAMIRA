@@ -6,7 +6,7 @@ const issueSchema = new Schema({
     type: String,
     required: true,
   },
-  city: {
+  state: {
     type: String,
     required: true,
   },

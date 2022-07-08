@@ -27,8 +27,8 @@ const userSchema = new Schema({
   },
 });
 
-// Pre-save hook to hash the password on signup
-userSchema.pre('save', function (next) {
+// Pre-save hook to hash the password on signup -- BCRYPT
+userSchema.pre('save', function (next) { // use function(); do not use arrow function bc we need access to "this"
   const user = this;
   if (!user.isModified('password')) return next();
   bcrypt.hash(user.password, 10, (err, hash) => {
@@ -38,7 +38,7 @@ userSchema.pre('save', function (next) {
   });
 });
 
-// Pre-save hook to hash the confirmPassword on signup
+// Pre-save hook to hash the confirmPassword on signup -- BCRYPT
 userSchema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('confirmPassword')) return next();
@@ -50,14 +50,14 @@ userSchema.pre('save', function (next) {
 });
 
 // method to check encrypted password on login
-userSchema.methods.checkPassword = function (password, cb) {
+userSchema.methods.checkPassword = function (password, callback) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    return cb(null, isMatch);
+    if (err) return callback(err);
+    return callback(null, isMatch);
   });
 };
 
-// method to remove user's passwrod for token/sending the response
+// method to remove user's password for token/sending the response
 userSchema.methods.withoutPassword = function () {
   const user = this.toObject();
   delete user.password;
