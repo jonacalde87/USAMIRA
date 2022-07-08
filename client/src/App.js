@@ -28,6 +28,7 @@ export default function App() {
     <BrowserRouter>
       <Nav logout={logout} token={token} />
       <Routes>
+        
         <Route
           path="/*"
           element={token ? <Navigate to="/profile" />
@@ -40,6 +41,7 @@ export default function App() {
             />
           }
         />
+        
         {/* Protected Route */}
         <Route
           element={<RequireAuth />}>

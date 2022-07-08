@@ -18,7 +18,7 @@ export default function Login(props) {
       width: '300px',
       margin: '0 auto',
     }}>
-      <p style={{color:"red"}}>{errMsg}</p>
+      <p style={{color:"red", margin:'5px'}}>{errMsg}</p>
 
       <TextField
         label="Username"

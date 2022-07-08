@@ -1,9 +1,9 @@
 const express = require('express');
-const issueRouter = express.Router();
+const postsRouter = express.Router();
 const Issue = require('../models/posts');
 
 // Get all issues route
-issueRouter.get('/', (req, res, next) => {
+postsRouter.get('/', (req, res, next) => {
   Issue.find((err, issues) => {
     if (err) {
       res.status(500);
@@ -13,8 +13,8 @@ issueRouter.get('/', (req, res, next) => {
   });
 });
 
-// Get issues by created by the user
-issueRouter.get('/user/:userId', (req, res, next) => {
+// Get Posts by created by the user
+postsRouter.get('/user/:userId', (req, res, next) => {
   Issue.find({ user: req.params.userId }, (err, issues) => {
     if (err) {
       res.status(500);
@@ -24,8 +24,8 @@ issueRouter.get('/user/:userId', (req, res, next) => {
   });
 });
 
-// Add new Issue Route
-issueRouter.post('/', (req, res, next) => {
+// Add new Posts Route
+postsRouter.post('/', (req, res, next) => {
   req.body.user = req.user._id;
   const newIssue = new Issue(req.body);
   newIssue.save((err, savedIssue) => {
@@ -37,8 +37,8 @@ issueRouter.post('/', (req, res, next) => {
   });
 });
 
-// Delete Issue by Issue ID Route and only by the creator of the issue
-issueRouter.delete('/:issueId', (req, res, next) => {
+// Delete Posts by Post ID Route and only by the creator of the post
+postsRouter.delete('/:issueId', (req, res, next) => {
   Issue.findOneAndRemove(
     { _id: req.params.issueId, user: req.user._id },
     (err, deletedIssue) => {
@@ -53,8 +53,8 @@ issueRouter.delete('/:issueId', (req, res, next) => {
   );
 });
 
-// Update issue by Issue ID and only by the creator of the issue
-issueRouter.put('/:issueId', (req, res, next) => {
+// Update posts by PostsID and only by the creator of the post
+postsRouter.put('/:issueId', (req, res, next) => {
   Issue.findOneAndUpdate(
     { _id: req.params.issueId, user: req.user._id },
     req.body,
@@ -72,7 +72,7 @@ issueRouter.put('/:issueId', (req, res, next) => {
 });
 
 // upvote Route for userID
-issueRouter.put('/:issueId/upvote', (req, res, next) => {
+postsRouter.put('/:issueId/upvote', (req, res, next) => {
     Issue.findOneAndUpdate(
       { _id: req.params.issueId },
       { $pull: { downVotes: req.user._id }, $addToSet: { upVotes: req.user._id } },
@@ -89,7 +89,7 @@ issueRouter.put('/:issueId/upvote', (req, res, next) => {
 
 
 // downvote Route for userID
-issueRouter.put('/:issueId/downvote', (req, res, next) => {
+postsRouter.put('/:issueId/downvote', (req, res, next) => {
   Issue.findOneAndUpdate(
     { _id: req.params.issueId },
     { $pull: { upVotes: req.user._id }, $addToSet: { downVotes: req.user._id } },
@@ -105,7 +105,7 @@ issueRouter.put('/:issueId/downvote', (req, res, next) => {
 });
 
 // delete vote Route for userID
-issueRouter.put('/:issueId/novote', (req, res, next) => {
+postsRouter.put('/:issueId/novote', (req, res, next) => {
   Issue.findOneAndUpdate(
     { _id: req.params.issueId },
     { $pull: { upVotes: req.user._id, downVotes: req.user._id } },
@@ -120,4 +120,4 @@ issueRouter.put('/:issueId/novote', (req, res, next) => {
   );
 });
 
-module.exports = issueRouter;
+module.exports = postsRouter;

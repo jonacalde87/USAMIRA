@@ -16,7 +16,7 @@ export default function UserProvider(props) {
   const initState = {
     user: JSON.parse(localStorage.getItem('user')) || {},
     token: localStorage.getItem('token') || "",
-    issues: [], //CHECK THIS
+    issues: [], 
     errMsg: '',
   }
 

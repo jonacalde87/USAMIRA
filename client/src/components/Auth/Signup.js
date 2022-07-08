@@ -25,7 +25,7 @@ export default function Signup(props) {
         padding: '25px',
       }}
     >
-      <p style={{color:"red"}}>{errMsg}</p>
+      <p style={{color:"red", margin:'5px'}}>{errMsg}</p>
      
         <TextField
           label="Username"
