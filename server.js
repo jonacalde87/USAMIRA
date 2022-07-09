@@ -16,13 +16,9 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 //db
-mongoose.connect(
-    process.env.MONGODB_URI 
-    || "mongodb://localhost:27017/USAMIRA-db",
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    },
+mongoose.connect(process.env.MONGODB_URI, 
+    // || "mongodb://localhost:27017/USAMIRA-db", //uncomment to use local db
+    {useNewUrlParser: true},
     (err) => {
         if (err) throw err
         console.log("Connected to the database")
