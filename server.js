@@ -1,11 +1,11 @@
+require("dotenv").config()
 const express = require("express")
 const app = express()
-require("dotenv").config()
 const expressJwt = require("express-jwt");
 const morgan = require("morgan")
 const mongoose = require("mongoose")
-//const PORT = process.env.PORT || 9000
-//const secret = process.env.SECRET || "correct horse battery staple"
+const PORT = process.env.PORT || 9000
+
 
 const path = require("path") // heroku deployment
 
@@ -45,8 +45,8 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(process.env.PORT || 9000, () => {
-    console.log(`[+] Starting server on port 9000`)
+app.listen(PORT, () => {
+    console.log(`[+] Starting server on port ${PORT}`)
 })
 
 
