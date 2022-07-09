@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 require("dotenv").config()
-// const expressJwt = require("express-jwt");
+const expressJwt = require("express-jwt");
 const morgan = require("morgan")
 const mongoose = require("mongoose")
 const PORT = process.env.PORT || 9000
@@ -27,7 +27,7 @@ mongoose.connect(
 
 //routes
 app.use('/auth', require('./routes/authRouter.js'));
-//app.use('/api', expressJwt({ secret: process.env.SECRET, algorithms: ['HS256'] }))
+app.use('/api', expressJwt({ secret: process.env.SECRET, algorithms: ['HS256'] }))
 app.use('/api/posts', require('./routes/postsRouter.js'));
 app.use('/api/posts/comments', require('./routes/commentRouter.js'));
 
