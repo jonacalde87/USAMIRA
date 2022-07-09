@@ -4,7 +4,7 @@ require("dotenv").config()
 const expressJwt = require("express-jwt");
 const morgan = require("morgan")
 const mongoose = require("mongoose")
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 9000
 
 const path = require("path") // heroku deployment
 
@@ -16,8 +16,8 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 //db
-mongoose.connect(process.env.MONGODB_URI, 
-    // || "mongodb://localhost:27017/USAMIRA-db", //uncomment to use local db
+mongoose.connect(
+    process.env.MONGODB_URI || "mongodb://localhost:27017/USAMIRA-db",
     {useNewUrlParser: true},
     (err) => {
         if (err) throw err
@@ -44,7 +44,7 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     console.log(`[+] Starting server on port ${PORT}`)
 })
 
